@@ -1,4 +1,7 @@
-from sqlalchemy import Integer, String, ForeignKey, Column
+import uuid
+
+from sqlalchemy import String, Column, Uuid
+from sqlalchemy.orm import relationship
 
 from app.database import Base
 
@@ -6,6 +9,10 @@ from app.database import Base
 class Menu(Base):
     __tablename__ = "menu"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    title = Column(String, unique=True)
     description = Column(String)
-    submenu_id = Column(ForeignKey("submenu.id"))
+    submenus = relationship('SubMenu', back_populates='menu', cascade='all, delete')
+
+    def __str__(self):
+        return f"Menu: {self.title}"
