@@ -17,7 +17,7 @@ class SubMenuDAO(BaseDAO):
                 func.count(Dish.__table__.columns.id).label('dishes_count')
             ).filter_by(menu_id=menu_id).outerjoin(
                 Dish, Dish.submenu_id == cls.model.__table__.columns.id
-                   ).group_by(cls.model.__table__.columns.id)
+            ).group_by(cls.model.__table__.columns.id)
             result = await session.execute(query)
             return result.mappings().all()
 
@@ -32,3 +32,10 @@ class SubMenuDAO(BaseDAO):
             result = await session.execute(query)
             added_object = result.scalar()
             return added_object
+
+    @classmethod
+    async def get_submenu(cls, menu_id: str, submenu_id: str):
+        async with async_session_maker() as session:
+            query = select(cls.model.__table__.columns).filter_by(id=submenu_id, menu_id=menu_id)
+            result = await session.execute(query)
+            return result.mappings().one_or_none()

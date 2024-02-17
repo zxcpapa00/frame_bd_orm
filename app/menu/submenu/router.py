@@ -25,3 +25,9 @@ async def create_submenu(menu_id, data: CreateSSubMenu):
         description=data.description
     )
     return submenu
+
+
+@router.get("/{menu_id}/submenus/{submenu_id}", status_code=200)
+async def get_submenu_by_id(menu_id: str, submenu_id: str):
+    submenu = await SubMenuDAO.get_submenu(menu_id, submenu_id)
+    return submenu
