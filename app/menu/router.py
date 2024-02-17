@@ -12,7 +12,7 @@ router = APIRouter(
 )
 
 
-@router.get("/")
+@router.get("/", status_code=200)
 async def get_all_menu() -> List[SMenu]:
     menus = await MenuDAO.find_all()
     return menus

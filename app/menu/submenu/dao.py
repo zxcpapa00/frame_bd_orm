@@ -27,3 +27,8 @@ class SubMenuDAO(BaseDAO):
             query = insert(cls.model).values(menu_id=menu_id, **data)
             await session.execute(query)
             await session.commit()
+
+            query = select(cls.model).filter_by(**data)
+            result = await session.execute(query)
+            added_object = result.scalar()
+            return added_object
