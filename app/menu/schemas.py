@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel, ConfigDict
 import uuid
 
@@ -10,3 +12,15 @@ class SMenu(BaseModel):
     description: str
 
 
+class SMenuCreate(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    title: str
+    description: str
+
+
+class SMenuUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    title: Optional[str]
+    description: Optional[str]

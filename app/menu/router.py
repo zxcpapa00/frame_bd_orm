@@ -1,10 +1,10 @@
 import uuid
 from typing import Optional, List
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException, status
 
 from app.menu.dao import MenuDAO
-from app.menu.schemas import SMenu
+from app.menu.schemas import SMenu, SMenuCreate, SMenuUpdate
 
 router = APIRouter(
     prefix="/api/v1/menus",
@@ -19,22 +19,27 @@ async def get_all_menu() -> List[SMenu]:
 
 
 @router.post("/", status_code=201)
-async def create_menu(title: str, description: str) -> SMenu:
-    asd = await MenuDAO.add(title=title, description=description)
-    return asd
+async def create_menu(menu_data: SMenuCreate) -> SMenu:
+    menu = await MenuDAO.add(title=menu_data.title, description=menu_data.description)
+    return menu
 
 
-@router.get("/{menu_id}")
+@router.get("/{menu_id}", status_code=200)
 async def get_menu_by_id(menu_id: str):
     menu = await MenuDAO.find_by_id(menu_id)
+    if not menu:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="menu not found")
     return menu
 
 
 @router.delete("/{menu_id}", status_code=200)
-async def delete_menu_by_id(menu_id: uuid.UUID):
+async def delete_menu_by_id(menu_id: str):
     await MenuDAO.delete_by_id(menu_id)
 
 
-@router.put("/{menu_id}")
-async def update_menu_by_id(menu_id: uuid.UUID, title: Optional[str], description: Optional[str]):
-    return await MenuDAO.update_by_id(menu_id, title=title, description=description)
+@router.patch("/{menu_id}")
+async def update_menu_by_id(menu_id: str, data: SMenuUpdate) -> SMenu:
+    menu = await MenuDAO.update_by_id(menu_id, title=data.title, description=data.description)
+    if not menu:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="menu not found")
+    return menu

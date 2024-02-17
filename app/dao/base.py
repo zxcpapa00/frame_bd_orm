@@ -1,23 +1,16 @@
-import uuid
-
 from sqlalchemy import select, insert, delete, update, func
-
 from app.database import async_session_maker
-from app.menu.models import Menu
 
 
 class BaseDAO:
     model = None
 
     @classmethod
-    async def find_by_id(cls, model_id):
+    async def find_by_id(cls, model_id: str):
         async with async_session_maker() as session:
-            try:
-                query = select(cls.model.__table__.columns).filter_by(id=model_id)
-                result = await session.execute(query)
-                return result.mappings().all()
-            except Exception as e:
-                return None
+            query = select(cls.model.__table__.columns).filter_by(id=model_id)
+            result = await session.execute(query)
+            return result.mappings().one_or_none()
 
     @classmethod
     async def find_all(cls, **filter_by):
@@ -33,21 +26,26 @@ class BaseDAO:
             await session.execute(query)
             await session.commit()
 
-        query = select(cls.model).filter_by(**data)
-        result = await session.execute(query)
-        added_object = result.scalar()  # Получаем объект из результата запроса
-        return added_object
+            query = select(cls.model).filter_by(**data)
+            result = await session.execute(query)
+            added_object = result.scalar()  # Получаем объект из результата запроса
+            return added_object
 
     @classmethod
-    async def delete_by_id(cls, model_id: uuid.UUID):
+    async def delete_by_id(cls, model_id: str):
         async with async_session_maker() as session:
-            query = delete(Menu).filter_by(id=model_id)
+            query = delete(cls.model.__table__).where(cls.model.__table__.c.id == model_id)
             await session.execute(query)
             await session.commit()
 
     @classmethod
-    async def update_by_id(cls, model_id: uuid.UUID, **data):
+    async def update_by_id(cls, model_id: str, **data):
         async with async_session_maker() as session:
-            query = update(Menu).values(**data).filter_by(id=model_id)
+            query = update(cls.model.__table__).where(cls.model.__table__.c.id == model_id).values(**data)
             await session.execute(query)
             await session.commit()
+
+            query = select(cls.model).filter_by(**data)
+            result = await session.execute(query)
+            added_object = result.scalar()  # Получаем объект из результата запроса
+            return added_object
