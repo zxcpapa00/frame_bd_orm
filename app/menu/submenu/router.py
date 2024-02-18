@@ -44,3 +44,8 @@ async def update_submenu_by_id(menu_id: str, submenu_id: str, data: UpdateSSubMe
         description=data.description
     )
     return submenu
+
+
+@router.delete("/{menu_id}/submenus/{submenu_id}", status_code=200)
+async def delete_submenu_by_id(menu_id: str, submenu_id: str):
+    await SubMenuDAO.delete_by_id(submenu_id)
