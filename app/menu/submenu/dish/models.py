@@ -8,7 +8,7 @@ import uuid
 class Dish(Base):
     __tablename__ = "dish"
 
-    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4())
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
     title = Column(String)
     description = Column(String)
     price = Column(Float)

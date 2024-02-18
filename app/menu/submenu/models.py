@@ -8,7 +8,7 @@ from app.database import Base
 class SubMenu(Base):
     __tablename__ = "submenu"
 
-    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4())
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
     title = Column(String, unique=True)
     description = Column(String)
     menu_id = Column(Uuid, ForeignKey('menu.id', ondelete='CASCADE'))
