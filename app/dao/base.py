@@ -28,7 +28,7 @@ class BaseDAO:
 
             query = select(cls.model).filter_by(**data)
             result = await session.execute(query)
-            added_object = result.scalar()  # Получаем объект из результата запроса
+            added_object = result.scalar()
             return added_object
 
     @classmethod
@@ -47,5 +47,5 @@ class BaseDAO:
 
             query = select(cls.model).filter_by(**data)
             result = await session.execute(query)
-            added_object = result.scalar()  # Получаем объект из результата запроса
+            added_object = result.scalar()
             return added_object

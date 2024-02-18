@@ -1,4 +1,5 @@
 import uuid
+from typing import Optional
 
 from pydantic import ConfigDict, BaseModel
 
@@ -9,7 +10,6 @@ class SSubMenu(BaseModel):
     id: uuid.UUID
     title: str
     description: str
-    dishes_count: int
 
 
 class CreateSSubMenu(BaseModel):
@@ -17,3 +17,10 @@ class CreateSSubMenu(BaseModel):
 
     title: str
     description: str
+
+
+class UpdateSSubMenu(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    title: Optional[str]
+    description: Optional[str]
