@@ -1,19 +1,28 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter
 
 from app.menu.submenu.dish.dao import DishDAO
+from app.menu.submenu.dish.schemas import SDish, CreateSDish
 
 router = APIRouter(
-    tags=["Блюдо"]
+    tags=["Блюдо"],
+    prefix="/api/v1/menus"
 )
 
 
-@router.post("/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes")
-async def create_dish(menu_id: str, submenu_id: str, title: str, description: str, price: float):
-    dish = await DishDAO.create_dish(submenu_id, title=title, description=description, price=price)
-    return status.HTTP_201_CREATED
+@router.post("/{menu_id}/submenus/{submenu_id}/dishes", status_code=201)
+async def create_dish(menu_id: str, submenu_id: str, data: CreateSDish) -> SDish:
+
+    dish = await DishDAO.add(
+        submenu_id=submenu_id,
+        title=data.title,
+        description=data.description,
+        price=data.price
+    )
+
+    return dish
 
 
-@router.get("/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes")
+@router.get("/{menu_id}/submenus/{submenu_id}/dishes")
 async def get_dishes(menu_id: str, submenu_id: str):
     dishes = await DishDAO.get_dishes(submenu_id)
     return dishes
