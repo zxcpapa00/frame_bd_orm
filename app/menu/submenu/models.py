@@ -3,7 +3,6 @@ from sqlalchemy import String, ForeignKey, Column, Uuid
 from sqlalchemy.orm import relationship
 
 from app.database import Base
-from app.menu.submenu.dish.models import Dish
 
 
 class SubMenu(Base):
