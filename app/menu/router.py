@@ -26,7 +26,7 @@ async def create_menu(menu_data: SMenuCreate) -> SMenu:
 
 @router.get("/{menu_id}", status_code=200)
 async def get_menu_by_id(menu_id: str):
-    menu = await MenuDAO.find_by_id(menu_id)
+    menu = await MenuDAO.get_menu_with_arg(menu_id)
     if not menu:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="menu not found")
     return menu

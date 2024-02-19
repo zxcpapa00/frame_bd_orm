@@ -10,6 +10,7 @@ class SMenu(BaseModel):
     id: uuid.UUID
     title: str
     description: str
+    # submenus_count: int
 
 
 class SMenuCreate(BaseModel):
