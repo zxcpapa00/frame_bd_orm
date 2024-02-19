@@ -10,7 +10,6 @@ class SMenu(BaseModel):
     id: uuid.UUID
     title: str
     description: str
-    # submenus_count: int
 
 
 class SMenuCreate(BaseModel):
@@ -25,3 +24,9 @@ class SMenuUpdate(BaseModel):
 
     title: Optional[str]
     description: Optional[str]
+
+
+class SMenuDetail(SMenu):
+
+    submenus_count: int
+    dishes_count: int

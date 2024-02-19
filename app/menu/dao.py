@@ -22,13 +22,16 @@ class MenuDAO(BaseDAO):
 
             query = select(SubMenu).filter(SubMenu.menu_id == menu_id)
             res = await session.execute(query)
-            submenus = res.mappings().all()
+            submenus = res.scalars().all()
             submenus_count = len(submenus)
+
+            dishes_count = sum([len(submenu.dishes) for submenu in submenus])
 
             data = {
                 'id': menu.id,
                 'title': menu.title,
                 'description': menu.description,
-                'submenus_count': submenus_count
+                'submenus_count': submenus_count,
+                'dishes_count': dishes_count
             }
             return data

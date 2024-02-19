@@ -12,5 +12,5 @@ class SubMenu(Base):
     title = Column(String, unique=True)
     description = Column(String)
     menu_id = Column(Uuid, ForeignKey('menu.id', ondelete='CASCADE'))
-    menu = relationship('Menu', back_populates='submenus', cascade='all')
-    dishes = relationship('Dish', back_populates='submenu', cascade='all')
+    menu = relationship('Menu', back_populates='submenus', cascade='all', lazy='selectin')
+    dishes = relationship('Dish', back_populates='submenu', cascade='all', lazy='selectin')

@@ -1,10 +1,8 @@
 from typing import List
 
 from fastapi import APIRouter
-from fastapi.exceptions import HTTPException
-
 from app.menu.submenu.dao import SubMenuDAO
-from app.menu.submenu.schemas import SSubMenu, CreateSSubMenu, UpdateSSubMenu
+from app.menu.submenu.schemas import SSubMenu, CreateSSubMenu, UpdateSSubMenu, SubmenuDetail
 
 router = APIRouter(
     prefix="/api/v1/menus",
@@ -28,11 +26,9 @@ async def create_submenu(menu_id, data: CreateSSubMenu):
     return submenu
 
 
-@router.get("/{menu_id}/submenus/{submenu_id}", status_code=200, response_model=SSubMenu)
-async def get_submenu_by_id(menu_id: str, submenu_id: str):
+@router.get("/{menu_id}/submenus/{submenu_id}", status_code=200)
+async def get_submenu_by_id(menu_id: str, submenu_id: str) -> SubmenuDetail:
     submenu = await SubMenuDAO.get_submenu(menu_id, submenu_id)
-    if not submenu:
-        raise HTTPException(status_code=404, detail="submenu not found")
     return submenu
 
 

@@ -4,7 +4,7 @@ from typing import Optional, List
 from fastapi import APIRouter, HTTPException, status
 
 from app.menu.dao import MenuDAO
-from app.menu.schemas import SMenu, SMenuCreate, SMenuUpdate
+from app.menu.schemas import SMenu, SMenuCreate, SMenuUpdate, SMenuDetail
 
 router = APIRouter(
     prefix="/api/v1/menus",
@@ -25,10 +25,8 @@ async def create_menu(menu_data: SMenuCreate) -> SMenu:
 
 
 @router.get("/{menu_id}", status_code=200)
-async def get_menu_by_id(menu_id: str):
+async def get_menu_by_id(menu_id: str) -> SMenuDetail:
     menu = await MenuDAO.get_menu_with_arg(menu_id)
-    if not menu:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="menu not found")
     return menu
 
 

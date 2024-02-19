@@ -13,4 +13,4 @@ class Dish(Base):
     description = Column(String)
     price = Column(Float)
     submenu_id = Column(Uuid, ForeignKey('submenu.id', ondelete='CASCADE'))
-    submenu = relationship('SubMenu', back_populates='dishes')
+    submenu = relationship('SubMenu', back_populates='dishes', lazy='selectin')

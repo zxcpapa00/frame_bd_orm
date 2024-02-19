@@ -24,3 +24,7 @@ class UpdateSSubMenu(BaseModel):
 
     title: Optional[str]
     description: Optional[str]
+
+
+class SubmenuDetail(SSubMenu):
+    dishes_count: int
