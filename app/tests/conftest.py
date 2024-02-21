@@ -1,4 +1,6 @@
 import asyncio
+from typing import Any
+
 import pytest
 from app.database import Base, async_session_maker, engine
 from httpx import AsyncClient
@@ -36,3 +38,18 @@ async def ac():
 async def session():
     async with async_session_maker() as session:
         yield session
+
+
+@pytest.fixture
+def menu_post() -> dict[str, str]:
+    return {'title': 'Menu 1', 'description': 'Menu 1 desc'}
+
+
+@pytest.fixture(scope='module')
+def saved_data() -> dict[str, Any]:
+    return {}
+
+
+@pytest.fixture
+def menu_patch() -> dict[str, str]:
+    return {'title': 'update Menu 1', 'description': 'update Menu 1 desc'}
