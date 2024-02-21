@@ -6,7 +6,7 @@ from app.config import settings
 
 if settings.MODE == "TEST":
     DATABASE_URL = (
-        f"postgresql+asyncpg://{settings.TEST_DB_USER}:{settings.TEST_DB_PASSDB_PASS}@{settings.TEST_DB_HOST}:"
+        f"postgresql+asyncpg://{settings.TEST_DB_USER}:{settings.TEST_DB_PASS}@{settings.TEST_DB_HOST}:"
         f"{settings.TEST_DB_PORT}/{settings.TEST_DB_NAME}")
     DATABASE_PARAMS = {"poolclass": NullPool}
 else:

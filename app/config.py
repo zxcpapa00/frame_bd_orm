@@ -6,6 +6,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     model_config = ConfigDict(env_file=".env")
+    MODE: Literal["DEV", "TEST", "PROD"]
 
     # database
     DB_HOST: str
@@ -15,7 +16,6 @@ class Settings(BaseSettings):
     DB_NAME: str
 
     # test
-    MODE: Literal["DEV", "TEST", "PROD"]
     TEST_DB_USER: str
     TEST_DB_PASS: str
     TEST_DB_HOST: str

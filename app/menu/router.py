@@ -12,13 +12,13 @@ router = APIRouter(
 )
 
 
-@router.get("/", status_code=200)
+@router.get("", status_code=200)
 async def get_all_menu() -> List[SMenu]:
     menus = await MenuDAO.find_all()
     return menus
 
 
-@router.post("/", status_code=201)
+@router.post("", status_code=201)
 async def create_menu(menu_data: SMenuCreate) -> SMenu:
     menu = await MenuDAO.add(title=menu_data.title, description=menu_data.description)
     return menu

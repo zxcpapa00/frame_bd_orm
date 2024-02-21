@@ -15,8 +15,8 @@ app.include_router(submenu_router)
 app.include_router(dish_router)
 
 
-@app.on_event("startup")
-async def clear_database():
-    async with async_session_maker() as session:
-        await session.execute(Menu.__table__.delete())
-        await session.commit()
+# @app.on_event("startup")
+# async def clear_database():
+#     async with async_session_maker() as session:
+#         await session.execute(Menu.__table__.delete())
+#         await session.commit()
