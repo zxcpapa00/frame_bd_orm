@@ -19,11 +19,8 @@ async def prepare_database():
 
 
 @pytest.fixture(scope='session')
-def event_loop():
-    try:
-        loop = asyncio.get_running_loop()
-    except RuntimeError:
-        loop = asyncio.new_event_loop()
+async def event_loop(request):
+    loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
     loop.close()
 
@@ -40,9 +37,14 @@ async def session():
         yield session
 
 
-@pytest.fixture
+@pytest.fixture()
 def menu_post() -> dict[str, str]:
     return {'title': 'Menu 1', 'description': 'Menu 1 desc'}
+
+
+@pytest.fixture()
+def submenu_post() -> dict[str, str]:
+    return {'title': 'SubMenu 1', 'description': 'SubMenu 1 desc'}
 
 
 @pytest.fixture(scope='module')
@@ -50,6 +52,11 @@ def saved_data() -> dict[str, Any]:
     return {}
 
 
-@pytest.fixture
+@pytest.fixture()
 def menu_patch() -> dict[str, str]:
     return {'title': 'update Menu 1', 'description': 'update Menu 1 desc'}
+
+
+@pytest.fixture()
+def submenu_patch() -> dict[str, str]:
+    return {'title': 'update SubMenu 1', 'description': 'update SubMenu 1 desc'}
