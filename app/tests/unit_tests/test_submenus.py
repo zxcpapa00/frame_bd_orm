@@ -92,4 +92,3 @@ async def test_get_menus(ac: AsyncClient):
 
     assert response.status_code == 200
     assert response.json() == []
-

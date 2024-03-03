@@ -47,6 +47,16 @@ def submenu_post() -> dict[str, str]:
     return {'title': 'SubMenu 1', 'description': 'SubMenu 1 desc'}
 
 
+@pytest.fixture()
+def dish_post() -> dict[str, str]:
+    return {'title': 'dish 1', 'description': 'dish 1 desc', 'price': '12.50'}
+
+
+@pytest.fixture()
+def dish_post_second() -> dict[str, str]:
+    return {'title': 'dish 2', 'description': 'dish 2 desc', 'price': '13.50'}
+
+
 @pytest.fixture(scope='module')
 def saved_data() -> dict[str, Any]:
     return {}
@@ -60,3 +70,8 @@ def menu_patch() -> dict[str, str]:
 @pytest.fixture()
 def submenu_patch() -> dict[str, str]:
     return {'title': 'update SubMenu 1', 'description': 'update SubMenu 1 desc'}
+
+
+@pytest.fixture()
+def dish_patch() -> dict[str, str]:
+    return {'title': 'update dish 1', 'description': ' update dish 1 desc', 'price': '14.50'}

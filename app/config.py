@@ -22,5 +22,9 @@ class Settings(BaseSettings):
     TEST_DB_PORT: int
     TEST_DB_NAME: str
 
+    POSTGRES_DB: str
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
+
 
 settings = Settings()
