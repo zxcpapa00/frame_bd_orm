@@ -4,16 +4,21 @@ from fastapi.exceptions import HTTPException
 from app.dao.base import BaseDAO
 from app.database import async_session_maker
 from app.menu.models import Menu
-from app.menu.submenu.models import SubMenu
 
 
 class MenuDAO(BaseDAO):
     model = Menu
 
     @classmethod
+    async def get_menus_with_submenus_and_dishes(cls):
+        async with async_session_maker() as session:
+            query = select(cls.model)
+            res = await session.execute(query)
+            return res.scalars().all()
+
+    @classmethod
     async def get_menu_with_arg(cls, menu_id: str):
         async with async_session_maker() as session:
-
             """SQL QUERY 
             SELECT m.id, m.title, m.description, COUNT(s.id) as submenus_count, d.dishes_count FROM menu as m
             LEFT JOIN submenu as s ON m.id = s.menu_id
@@ -32,6 +37,9 @@ class MenuDAO(BaseDAO):
 
             res = await session.execute(query)
             menu = res.mappings().one_or_none()
+
+            if not menu:
+                raise HTTPException(status_code=404, detail="menu not found")
 
             return menu
 

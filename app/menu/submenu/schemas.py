@@ -1,7 +1,9 @@
 import uuid
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import ConfigDict, BaseModel
+
+from app.menu.submenu.dish.schemas import SDish
 
 
 class SSubMenu(BaseModel):
@@ -28,3 +30,7 @@ class UpdateSSubMenu(BaseModel):
 
 class SubmenuDetail(SSubMenu):
     dishes_count: int
+
+
+class SubmenuWDishes(SSubMenu):
+    dishes: List[SDish]

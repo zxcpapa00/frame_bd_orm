@@ -1,10 +1,9 @@
-import uuid
-from typing import Optional, List
+from typing import List
 
 from fastapi import APIRouter, HTTPException, status
 
 from app.menu.dao import MenuDAO
-from app.menu.schemas import SMenu, SMenuCreate, SMenuUpdate, SMenuDetail
+from app.menu.schemas import SMenu, SMenuCreate, SMenuUpdate, SMenuDetail, SMenuAll
 
 router = APIRouter(
     prefix="/api/v1/menus",
@@ -15,6 +14,12 @@ router = APIRouter(
 @router.get("", status_code=200)
 async def get_all_menu() -> List[SMenu]:
     menus = await MenuDAO.find_all()
+    return menus
+
+
+@router.get("/all")
+async def get_menus() -> List[SMenuAll]:
+    menus = await MenuDAO.get_menus_with_submenus_and_dishes()
     return menus
 
 
