@@ -1,6 +1,7 @@
 from typing import List
 
 from fastapi import APIRouter, HTTPException, status
+from fastapi_cache.decorator import cache
 
 from app.menu.dao import MenuDAO
 from app.menu.schemas import SMenu, SMenuCreate, SMenuUpdate, SMenuDetail, SMenuAll
@@ -18,6 +19,7 @@ async def get_all_menu() -> List[SMenu]:
 
 
 @router.get("/all")
+@cache(expire=30)
 async def get_menus() -> List[SMenuAll]:
     menus = await MenuDAO.get_menus_with_submenus_and_dishes()
     return menus

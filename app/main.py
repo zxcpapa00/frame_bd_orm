@@ -1,4 +1,7 @@
 from fastapi import FastAPI
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
+from redis import asyncio as aioredis
 
 from app.database import async_session_maker
 from app.menu.router import router as menu_router
@@ -20,3 +23,9 @@ app.include_router(dish_router)
 #     async with async_session_maker() as session:
 #         await session.execute(Menu.__table__.delete())
 #         await session.commit()
+
+
+@app.on_event("startup")
+def startup():
+    redis = aioredis.from_url("redis://localhost:6379", encoding="utf-8", decode_responses=True)
+    FastAPICache.init(RedisBackend(redis), prefix="cache")
