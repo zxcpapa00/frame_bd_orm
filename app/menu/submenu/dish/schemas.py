@@ -1,6 +1,6 @@
 import uuid
 
-from pydantic import ConfigDict, BaseModel, condecimal
+from pydantic import BaseModel, ConfigDict, condecimal
 
 
 class CreateSDish(BaseModel):

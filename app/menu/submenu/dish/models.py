@@ -1,12 +1,13 @@
-from sqlalchemy import String, ForeignKey, Column, Uuid, Float
+import uuid
+
+from sqlalchemy import Column, Float, ForeignKey, String, Uuid
 from sqlalchemy.orm import relationship
 
 from app.database import Base
-import uuid
 
 
 class Dish(Base):
-    __tablename__ = "dish"
+    __tablename__ = 'dish'
 
     id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
     title = Column(String)

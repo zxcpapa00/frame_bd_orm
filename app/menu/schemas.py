@@ -1,7 +1,7 @@
-from typing import Optional, List
+import uuid
+from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict
-import uuid
 
 from app.menu.submenu.schemas import SubmenuWDishes
 
@@ -24,8 +24,8 @@ class SMenuCreate(BaseModel):
 class SMenuUpdate(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
-    title: Optional[str]
-    description: Optional[str]
+    title: str | None
+    description: str | None
 
 
 class SMenuDetail(SMenu):
@@ -35,4 +35,4 @@ class SMenuDetail(SMenu):
 
 class SMenuAll(SMenu):
     id: uuid.UUID | str | None
-    submenus: List[SubmenuWDishes]
+    submenus: list[SubmenuWDishes]

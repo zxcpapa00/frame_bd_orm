@@ -1,12 +1,13 @@
 import uuid
-from sqlalchemy import String, ForeignKey, Column, Uuid
+
+from sqlalchemy import Column, ForeignKey, String, Uuid
 from sqlalchemy.orm import relationship
 
 from app.database import Base
 
 
 class SubMenu(Base):
-    __tablename__ = "submenu"
+    __tablename__ = 'submenu'
 
     id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
     title = Column(String, unique=True)

@@ -1,5 +1,5 @@
-from sqlalchemy import select, text
 from fastapi.exceptions import HTTPException
+from sqlalchemy import select, text
 
 from app.dao.base import BaseDAO
 from app.database import async_session_maker
@@ -19,7 +19,7 @@ class MenuDAO(BaseDAO):
     @classmethod
     async def get_menu_with_arg(cls, menu_id: str):
         async with async_session_maker() as session:
-            """SQL QUERY 
+            """SQL QUERY
             SELECT m.id, m.title, m.description, COUNT(s.id) as submenus_count, d.dishes_count FROM menu as m
             LEFT JOIN submenu as s ON m.id = s.menu_id
             LEFT JOIN (SELECT s.id, COUNT(d.submenu_id) as dishes_count FROM submenu as s
@@ -39,7 +39,7 @@ class MenuDAO(BaseDAO):
             menu = res.mappings().one_or_none()
 
             if not menu:
-                raise HTTPException(status_code=404, detail="menu not found")
+                raise HTTPException(status_code=404, detail='menu not found')
 
             return menu
 

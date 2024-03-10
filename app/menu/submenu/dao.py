@@ -1,6 +1,6 @@
-from sqlalchemy import select, insert, func
-
 from fastapi.exceptions import HTTPException
+from sqlalchemy import func, insert, select
+
 from app.dao.base import BaseDAO
 from app.database import async_session_maker
 from app.menu.submenu.dish.models import Dish
@@ -41,7 +41,7 @@ class SubMenuDAO(BaseDAO):
             result = await session.execute(query)
             submenu = result.scalars().one_or_none()
             if not submenu:
-                raise HTTPException(status_code=404, detail="submenu not found")
+                raise HTTPException(status_code=404, detail='submenu not found')
 
             data = {
                 'id': submenu.id,

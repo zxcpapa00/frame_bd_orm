@@ -2,16 +2,16 @@ import asyncio
 from typing import Any
 
 import pytest
-from app.database import Base, async_session_maker, engine
 from httpx import AsyncClient
 
+from app.database import Base, async_session_maker, engine
 from app.main import app as fastapi_app
 from app.menu.models import Menu
-from app.menu.submenu.models import SubMenu
 from app.menu.submenu.dish.models import Dish
+from app.menu.submenu.models import SubMenu
 
 
-@pytest.fixture(autouse=True, scope="module")
+@pytest.fixture(autouse=True, scope='module')
 async def prepare_database():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
@@ -27,11 +27,11 @@ async def event_loop(request):
 
 @pytest.fixture()
 async def ac():
-    async with AsyncClient(app=fastapi_app, base_url="http://test") as ac:
+    async with AsyncClient(app=fastapi_app, base_url='http://test') as ac:
         yield ac
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope='function')
 async def session():
     async with async_session_maker() as session:
         yield session
