@@ -12,12 +12,14 @@ router = APIRouter(
 
 @router.get('/{menu_id}/submenus', status_code=200)
 async def get_submenus(menu_id: str) -> list[SSubMenu]:
+    """Получение всех подменю по id меню"""
     submenus = await SubMenuDAO.find_all_submenu_for_menu(menu_id)
     return submenus
 
 
 @router.post('/{menu_id}/submenus', status_code=201, response_model=SSubMenu)
 async def create_submenu(menu_id, data: CreateSSubMenu):
+    """Создание подменю"""
     submenu = await SubMenuDAO.create_submenu_for_menu(
         menu_id=menu_id,
         title=data.title,
@@ -28,12 +30,14 @@ async def create_submenu(menu_id, data: CreateSSubMenu):
 
 @router.get('/{menu_id}/submenus/{submenu_id}', status_code=200)
 async def get_submenu_by_id(menu_id: str, submenu_id: str) -> SubmenuDetail:
+    """Получение конкретного подменю"""
     submenu = await SubMenuDAO.get_submenu(menu_id, submenu_id)
     return submenu
 
 
 @router.patch('/{menu_id}/submenus/{submenu_id}', status_code=200, response_model=SSubMenu)
 async def update_submenu_by_id(menu_id: str, submenu_id: str, data: UpdateSSubMenu):
+    """Обновление подменю"""
     submenu = await SubMenuDAO.update_by_id(
         submenu_id,
         title=data.title,
@@ -44,4 +48,5 @@ async def update_submenu_by_id(menu_id: str, submenu_id: str, data: UpdateSSubMe
 
 @router.delete('/{menu_id}/submenus/{submenu_id}', status_code=200)
 async def delete_submenu_by_id(menu_id: str, submenu_id: str):
+    """Удаление подменю"""
     await SubMenuDAO.delete_by_id(submenu_id)
