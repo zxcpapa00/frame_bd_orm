@@ -1,4 +1,4 @@
-from sqlalchemy import delete, func, insert, select, update
+from sqlalchemy import delete, insert, select, update
 
 from app.database import async_session_maker
 

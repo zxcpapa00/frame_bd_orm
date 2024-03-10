@@ -83,10 +83,8 @@ async def test_delete_submenu(ac: AsyncClient, saved_data: dict):
 
 async def test_get_submenus(ac: AsyncClient, saved_data: dict):
     menu = saved_data['menu']
-    submenu = saved_data['submenu']
     response = await ac.get('api/v1/menus/{}/submenus'.format(
-        menu['id'],
-        submenu['id']))
+        menu['id']))
 
     assert response.status_code == 200
     assert response.json() == []
