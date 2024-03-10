@@ -15,10 +15,7 @@ def create_email_message(
     email['From'] = settings.DB_USER
     email['To'] = email_to
     email.set_content(
-        f"""
-            {menu}
-        
-        """,
+        f"{menu}",
         subtype="html"
     )
     return email

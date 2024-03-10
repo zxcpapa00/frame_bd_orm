@@ -1,9 +1,6 @@
-from typing import List
-
 from fastapi import APIRouter, HTTPException, status
 from fastapi_cache.decorator import cache
 from pydantic import EmailStr
-from pydantic.v1 import parse_obj_as
 
 from app.menu.dao import MenuDAO
 from app.menu.schemas import (SMenu, SMenuAll, SMenuCreate, SMenuDetail,

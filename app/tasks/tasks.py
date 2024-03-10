@@ -1,10 +1,10 @@
+import smtplib
+
 from pydantic import EmailStr
 
 from app.config import settings
 from app.tasks.config import celery_app
 from app.tasks.email_templates import create_email_message
-
-import smtplib
 
 
 @celery_app.task
