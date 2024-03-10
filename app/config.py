@@ -26,5 +26,15 @@ class Settings(BaseSettings):
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
 
+    # smtp
+    SMTP_HOST: str
+    SMTP_USER: str
+    SMTP_PORT: int
+    SMTP_PASS: str
+
+    # redis
+    REDIS_HOST: str
+    REDIS_PORT: int
+
 
 settings = Settings()

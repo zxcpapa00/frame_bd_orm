@@ -1,9 +1,14 @@
+from typing import List
+
 from fastapi import APIRouter, HTTPException, status
 from fastapi_cache.decorator import cache
+from pydantic import EmailStr
+from pydantic.v1 import parse_obj_as
 
 from app.menu.dao import MenuDAO
 from app.menu.schemas import (SMenu, SMenuAll, SMenuCreate, SMenuDetail,
                               SMenuUpdate)
+from app.tasks.tasks import send_email
 
 router = APIRouter(
     prefix='/api/v1/menus',
@@ -22,6 +27,14 @@ async def get_all_menu() -> list[SMenu]:
 async def get_menus() -> list[SMenuAll]:
     menus = await MenuDAO.get_menus_with_submenus_and_dishes()
     return menus
+
+
+@router.get('/menus_on_email/{menu_id}')
+async def get_menus_on_email(menu_id: str, email: EmailStr):
+    menu = await MenuDAO.find_by_id(menu_id)
+    menu_dict = dict(menu)
+    send_email.delay(menu_dict, email)
+    return f"Меню был отправлено на вашу почту: {email}"
 
 
 @router.post('', status_code=201)
