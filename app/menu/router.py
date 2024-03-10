@@ -2,7 +2,8 @@ from fastapi import APIRouter, HTTPException, status
 from fastapi_cache.decorator import cache
 
 from app.menu.dao import MenuDAO
-from app.menu.schemas import SMenu, SMenuAll, SMenuCreate, SMenuDetail, SMenuUpdate
+from app.menu.schemas import (SMenu, SMenuAll, SMenuCreate, SMenuDetail,
+                              SMenuUpdate)
 
 router = APIRouter(
     prefix='/api/v1/menus',

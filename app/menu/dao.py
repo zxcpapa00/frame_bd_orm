@@ -27,7 +27,8 @@ class MenuDAO(BaseDAO):
             GROUP BY 1) as d ON d.id = s.id
             GROUP BY 1, 5"""
 
-            query = text("""SELECT m.id, m.title, m.description, COUNT(s.id) as submenus_count, d.dishes_count FROM menu as m
+            query = text("""SELECT m.id, m.title, m.description, COUNT(s.id) as submenus_count, d.dishes_count
+            FROM menu as m
             LEFT JOIN submenu as s ON m.id = s.menu_id
             LEFT JOIN (SELECT s.id, COUNT(d.submenu_id) as dishes_count FROM submenu as s
             JOIN dish as d ON d.submenu_id = s.id

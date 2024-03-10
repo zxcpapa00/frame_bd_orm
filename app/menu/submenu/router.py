@@ -1,14 +1,8 @@
-from typing import List
-
 from fastapi import APIRouter
 
 from app.menu.submenu.dao import SubMenuDAO
-from app.menu.submenu.schemas import (
-    CreateSSubMenu,
-    SSubMenu,
-    SubmenuDetail,
-    UpdateSSubMenu,
-)
+from app.menu.submenu.schemas import (CreateSSubMenu, SSubMenu, SubmenuDetail,
+                                      UpdateSSubMenu)
 
 router = APIRouter(
     prefix='/api/v1/menus',

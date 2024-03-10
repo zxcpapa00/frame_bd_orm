@@ -1,6 +1,4 @@
-from typing import List
-
-from fastapi import APIRouter, status
+from fastapi import APIRouter
 from fastapi.exceptions import HTTPException
 
 from app.menu.submenu.dish.dao import DishDAO
@@ -50,5 +48,5 @@ async def update_dish_by_id(menu_id: str, submenu_id: str, dish_id: str, data: C
 
 
 @router.delete('/{menu_id}/submenus/{submenu_id}/dishes/{dish_id}', status_code=200)
-async def update_dish_by_id(menu_id: str, submenu_id: str, dish_id: str):
+async def delete_dish_by_id(menu_id: str, submenu_id: str, dish_id: str):
     await DishDAO.delete_by_id(dish_id)
